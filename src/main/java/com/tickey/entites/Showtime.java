@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "showtimes")
 public class Showtime {
@@ -14,11 +17,12 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "movie_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
@@ -35,9 +39,11 @@ public class Showtime {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Booking> bookings;
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<BookingSeat> bookingSeats;
 
     public Showtime() {
