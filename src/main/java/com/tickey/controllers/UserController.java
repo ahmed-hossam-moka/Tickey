@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.tickey.entites.User;
 import com.tickey.entites.enums.UserRole;
-import com.tickey.servies.UserService;
+import com.tickey.services.UserService;
 
 @RestController
 public class UserController {
