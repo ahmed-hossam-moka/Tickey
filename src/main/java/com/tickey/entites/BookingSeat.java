@@ -10,17 +10,17 @@ import jakarta.persistence.*;
 public class BookingSeat {
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id", nullable = false)
     private Seat seat;
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "showtime_id", nullable = false)
     private Showtime showtime;
 
