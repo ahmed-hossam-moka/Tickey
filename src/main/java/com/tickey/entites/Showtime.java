@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "showtimes")
 public class Showtime {
@@ -35,9 +37,11 @@ public class Showtime {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Booking> bookings;
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<BookingSeat> bookingSeats;
 
     public Showtime() {

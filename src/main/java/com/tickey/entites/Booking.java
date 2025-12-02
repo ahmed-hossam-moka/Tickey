@@ -3,6 +3,8 @@ package com.tickey.entites;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickey.entites.enums.BookingStatus;
 
 @Entity
@@ -35,6 +37,7 @@ public class Booking {
     private LocalDateTime cancelledAt;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<BookingSeat> bookingSeats;
 
     public Booking() {

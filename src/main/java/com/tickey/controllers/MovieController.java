@@ -2,7 +2,7 @@ package com.tickey.controllers;
 
 import com.tickey.entites.Movie;
 import com.tickey.entites.enums.MovieStatus;
-import com.tickey.servies.MovieService;
+import com.tickey.services.MovieService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

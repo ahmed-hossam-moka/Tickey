@@ -2,6 +2,8 @@ package com.tickey.entites;
 
 import jakarta.persistence.*;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickey.entites.enums.SeatType;
 
 @Entity
@@ -29,6 +31,7 @@ public class Seat {
     private SeatType type;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<BookingSeat> bookingSeats;
 
     public Seat() {

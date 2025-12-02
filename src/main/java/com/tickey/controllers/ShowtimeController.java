@@ -3,7 +3,7 @@ package com.tickey.controllers;
 import com.tickey.entites.Hall;
 import com.tickey.entites.Movie;
 import com.tickey.entites.Showtime;
-import com.tickey.servies.ShowtimeService;
+import com.tickey.services.ShowtimeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class ShowtimeController {
         return showtimeService.createShowtime(showtime);
     }
 
-  
+
     @PutMapping("/{id}")
     public Showtime updateShowtime( @PathVariable long id , @RequestBody Showtime showtime) {
         return showtimeService.updateShowtime(id,showtime);

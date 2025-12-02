@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickey.entites.enums.MovieStatus;
 
 @Entity
@@ -43,6 +44,7 @@ public class Movie {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Showtime> showtimes;
 
     public Movie() {
