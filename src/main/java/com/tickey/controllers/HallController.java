@@ -22,7 +22,7 @@ import com.tickey.entites.Seat;
 import com.tickey.services.HallService;
 
 @RestController
-@RequestMapping("/api/halls")
+@RequestMapping("/halls")
 public class HallController {
     
     @Autowired 

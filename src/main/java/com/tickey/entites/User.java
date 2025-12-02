@@ -3,6 +3,8 @@ package com.tickey.entites;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickey.entites.enums.UserRole;
 
 @Entity
@@ -20,6 +22,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -36,6 +39,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Booking> bookings;
 
     public User() {
