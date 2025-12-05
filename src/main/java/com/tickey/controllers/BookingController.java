@@ -1,5 +1,6 @@
 package com.tickey.controllers;
 
+import com.tickey.dtos.bookinggetdto;
 import com.tickey.entites.Booking;
 import com.tickey.entites.Seat;
 import com.tickey.services.BookingService;
@@ -10,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/bookings")
@@ -45,14 +47,14 @@ public class BookingController {
 
     // Get user's bookings
     @GetMapping("/user/{userId}")
-    public List<Booking> getUserBookings(@PathVariable Long userId) {
-        return bookingService.getUserBookings(userId);
+    public List<bookinggetdto> getUserBookings(@PathVariable Long userId) {
+        return bookingService.getUserBookingsAsDto(userId);
     }
 
     // Get booking by ID
     @GetMapping("/{id}")
-    public Booking getBookingById(@PathVariable Long id) {
-        return bookingService.getBookingById(id)
+    public bookinggetdto getBookingById(@PathVariable Long id) {
+        return bookingService.getBookingByIdAsDto(id)
                 .orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Booking not found"));
     }
@@ -111,7 +113,7 @@ public class BookingController {
 
     // Get all bookings (admin)
     @GetMapping
-    public List<Booking> getAllBookings() {
-        return bookingService.getAllBookings();
+    public List<bookinggetdto> getAllBookings() {
+        return bookingService.getAllBookingsAsDto();
     }
 }

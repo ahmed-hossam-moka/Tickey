@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.tickey.dtos.hallgetdto;
 import com.tickey.entites.Hall;
 import com.tickey.entites.Seat;
 import com.tickey.services.HallService;
@@ -104,18 +105,18 @@ public Hall createHallWithSeats(@RequestBody Map<String, Object> request) {
 
 
     @GetMapping
-    public List<Hall> getAllHalls(){
-        return hallService.getAllHalls();
+    public List<hallgetdto> getAllHalls(){
+        return hallService.getAllHallsAsDto();
     }
     @GetMapping("/id/{id}")
-    public Hall getHallbyID(@PathVariable Long id){
-        return hallService.getHallById(id)
+    public hallgetdto getHallbyID(@PathVariable Long id){
+        return hallService.getHallByIdAsDto(id)
                     .orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Hall not found"));
     }
     @GetMapping("/name/{name}")
-    public Hall getHallByName(@PathVariable String name){
-        return hallService.getHallByName(name)
+    public hallgetdto getHallByName(@PathVariable String name){
+        return hallService.getHallByNameAsDto(name)
             .orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Hall not found"));
     }

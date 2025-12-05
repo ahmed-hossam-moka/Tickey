@@ -1,5 +1,6 @@
 package com.tickey.services;
 
+import com.tickey.dtos.bookinggetdto;
 import com.tickey.entites.*;
 import com.tickey.entites.enums.BookingStatus;
 import com.tickey.repositorys.*;
@@ -30,6 +31,59 @@ public class BookingService {
 
     @Autowired
     private SeatRepository seatRepository;
+    
+    // Convert Booking entity to bookinggetdto
+    private bookinggetdto convertToDto(Booking booking) {
+        bookinggetdto dto = new bookinggetdto();
+        dto.setId(booking.getId());
+        
+        // User info
+        if (booking.getUser() != null) {
+            dto.setUserId(booking.getUser().getId());
+            dto.setUserName(booking.getUser().getName());
+            dto.setUserEmail(booking.getUser().getEmail());
+        }
+        
+        // Showtime info
+        if (booking.getShowtime() != null) {
+            dto.setShowtimeId(booking.getShowtime().getId());
+            if (booking.getShowtime().getMovie() != null) {
+                dto.setMovieTitle(booking.getShowtime().getMovie().getTitle());
+            }
+            if (booking.getShowtime().getHall() != null) {
+                dto.setHallName(booking.getShowtime().getHall().getName());
+            }
+            dto.setShowDate(booking.getShowtime().getShowDate() != null ? 
+                    booking.getShowtime().getShowDate().toString() : null);
+            dto.setShowTime(booking.getShowtime().getShowTime() != null ? 
+                    booking.getShowtime().getShowTime().toString() : null);
+        }
+        
+        dto.setTotalPrice(booking.getTotalPrice());
+        dto.setStatus(booking.getStatus());
+        dto.setBookingDate(booking.getBookingDate());
+        dto.setCancelledAt(booking.getCancelledAt());
+        
+        // Booked seats info
+        if (booking.getBookingSeats() != null) {
+            List<bookinggetdto.BookedSeatInfo> bookedSeatsInfo = booking.getBookingSeats().stream()
+                    .map(bs -> {
+                        bookinggetdto.BookedSeatInfo seatInfo = new bookinggetdto.BookedSeatInfo();
+                        if (bs.getSeat() != null) {
+                            seatInfo.setSeatId(bs.getSeat().getId());
+                            seatInfo.setRowNo(bs.getSeat().getRowNo());
+                            seatInfo.setSeatNumber(bs.getSeat().getSeatNumber());
+                            seatInfo.setSeatType(bs.getSeat().getType() != null ? 
+                                    bs.getSeat().getType().toString() : null);
+                        }
+                        return seatInfo;
+                    })
+                    .collect(Collectors.toList());
+            dto.setBookedSeats(bookedSeatsInfo);
+        }
+        
+        return dto;
+    }
 
     // Create a new booking
     @Transactional
@@ -105,10 +159,23 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return bookingRepository.findByUser(user);
     }
+    
+    // DTO methods for GET operations
+    public List<bookinggetdto> getUserBookingsAsDto(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return bookingRepository.findByUser(user).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
     // Get booking by ID
     public Optional<Booking> getBookingById(Long bookingId) {
         return bookingRepository.findById(bookingId);
+    }
+    
+    public Optional<bookinggetdto> getBookingByIdAsDto(Long bookingId) {
+        return bookingRepository.findById(bookingId).map(this::convertToDto);
     }
 
     // Get available seats for a showtime
@@ -182,6 +249,12 @@ public class BookingService {
     // Get all bookings (admin)
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
+    }
+    
+    public List<bookinggetdto> getAllBookingsAsDto() {
+        return bookingRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     // Check if booking exists

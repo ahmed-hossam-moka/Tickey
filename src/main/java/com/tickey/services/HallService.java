@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tickey.dtos.hallgetdto;
 import com.tickey.entites.Hall;
 import com.tickey.entites.Seat;
 import com.tickey.entites.enums.SeatType;
@@ -25,6 +27,18 @@ public class HallService {
     
     @Autowired
     private SeatRepository seatRepository;
+    
+    // Convert Hall entity to hallgetdto
+    private hallgetdto convertToDto(Hall hall) {
+        hallgetdto dto = new hallgetdto();
+        dto.setId(hall.getId());
+        dto.setName(hall.getName());
+        dto.setTotalSeats(hall.getTotalSeats());
+        dto.setRowCount(hall.getRowCount());
+        dto.setSeatsPerRow(hall.getSeatsPerRow());
+        dto.setCreatedAt(hall.getCreatedAt());
+        return dto;
+    }
 
     public HallService(){
 
@@ -40,15 +54,30 @@ public class HallService {
     public List<Hall> getAllHalls() {
         return hallRepository.findAll();
     }
+    
+    // DTO methods for GET operations
+    public List<hallgetdto> getAllHallsAsDto() {
+        return hallRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
     //Get Halls by id
     public Optional<Hall> getHallById(Long id) {
         return hallRepository.findById(id);
     }
+    
+    public Optional<hallgetdto> getHallByIdAsDto(Long id) {
+        return hallRepository.findById(id).map(this::convertToDto);
+    }
 
     //Get Halls by Name
     public Optional<Hall> getHallByName(String name) {
         return hallRepository.findByName(name);
+    }
+    
+    public Optional<hallgetdto> getHallByNameAsDto(String name) {
+        return hallRepository.findByName(name).map(this::convertToDto);
     }
 
     //update

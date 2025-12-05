@@ -1,5 +1,6 @@
 package com.tickey.controllers;
 
+import com.tickey.dtos.moviegetdto;
 import com.tickey.entites.Movie;
 import com.tickey.entites.enums.MovieStatus;
 import com.tickey.services.MovieService;
@@ -34,27 +35,27 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Movie> findMovieById(@PathVariable Long id){
-        return movieService.findMovieById(id);
+    public Optional<moviegetdto> findMovieById(@PathVariable Long id){
+        return movieService.findMovieByIdAsDto(id);
     }
 
     @GetMapping("/status/{status}")
-    public List<Movie> findByStatus(@PathVariable MovieStatus status){
-        return movieService.findByStatus(status);
+    public List<moviegetdto> findByStatus(@PathVariable MovieStatus status){
+        return movieService.findByStatusAsDto(status);
     }
 
     @GetMapping("/search/title/{title}")
-    public List<Movie> findByTitle(@PathVariable String title){
-        return movieService.findByTitleContainingIgnoreCase(title);
+    public List<moviegetdto> findByTitle(@PathVariable String title){
+        return movieService.findByTitleContainingIgnoreCaseAsDto(title);
     }
 
     @GetMapping("/genre/{genre}")
-    public List<Movie> findByGenre(@PathVariable String genre){
-        return movieService.findByGenre(genre);
+    public List<moviegetdto> findByGenre(@PathVariable String genre){
+        return movieService.findByGenreAsDto(genre);
     }
 
     @GetMapping
-    public List<Movie> findAllMovies(){
-        return movieService.findAllMovies();
+    public List<moviegetdto> findAllMovies(){
+        return movieService.findAllMoviesAsDto();
     }
 }

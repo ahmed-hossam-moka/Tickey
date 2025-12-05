@@ -1,5 +1,6 @@
 package com.tickey.controllers;
 
+import com.tickey.dtos.showtimegetdto;
 import com.tickey.entites.Hall;
 import com.tickey.entites.Movie;
 import com.tickey.entites.Showtime;
@@ -37,41 +38,41 @@ public class ShowtimeController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Showtime> findShowtime(@PathVariable Long id){
-        return showtimeService.findShowtime(id);
+    public Optional<showtimegetdto> findShowtime(@PathVariable Long id){
+        return showtimeService.findShowtimeAsDto(id);
     }
     
    // @GetMapping
-    //public List<Showtime> findAllShowtimes(){
-      //  return showtimeService.findAllShowtimes();
-    //}
+     //public List<Showtime> findAllShowtimes(){
+       //  return showtimeService.findAllShowtimes();
+     //}
 
     @PostMapping("/movie")
-    public List<Showtime> findByMovie(@RequestBody Movie movie){
-        return showtimeService.findByMovie(movie);
+    public List<showtimegetdto> findByMovie(@RequestBody Movie movie){
+        return showtimeService.findByMovieAsDto(movie);
     }
 
     @PostMapping("/hall")
-    public List<Showtime> findByHall(@RequestBody Hall hall){
-        return showtimeService.findByHall(hall);
+    public List<showtimegetdto> findByHall(@RequestBody Hall hall){
+        return showtimeService.findByHallAsDto(hall);
     }
 
     @GetMapping("/date/{date}")
-    public List<Showtime> findByShowDate(@PathVariable String date){
+    public List<showtimegetdto> findByShowDate(@PathVariable String date){
         LocalDate localDate = LocalDate.parse(date);
-        return showtimeService.findByShowDate(localDate);
+        return showtimeService.findByShowDateAsDto(localDate);
     }
 
     @PostMapping("/movie/date/{date}")
-    public List<Showtime> findByMovieAndShowDate( @RequestBody Movie movie,@PathVariable String date) {
+    public List<showtimegetdto> findByMovieAndShowDate( @RequestBody Movie movie,@PathVariable String date) {
         LocalDate localDate = LocalDate.parse(date);
-        return showtimeService.findByMovieAndShowDate(movie, localDate);
+        return showtimeService.findByMovieAndShowDateAsDto(movie, localDate);
     }
 
     @PostMapping("/hall/date/{date}")
-    public List<Showtime> findByHallAndShowDate( @RequestBody Hall hall, @PathVariable String date) {
+    public List<showtimegetdto> findByHallAndShowDate( @RequestBody Hall hall, @PathVariable String date) {
         LocalDate localDate = LocalDate.parse(date);
-        return showtimeService.findByHallAndShowDate(hall, localDate);
+        return showtimeService.findByHallAndShowDateAsDto(hall, localDate);
     }
 }
 
