@@ -47,9 +47,9 @@ public class ShowtimeController {
        //  return showtimeService.findAllShowtimes();
      //}
 
-    @PostMapping("/movie")
-    public List<showtimegetdto> findByMovie(@RequestBody Movie movie){
-        return showtimeService.findByMovieAsDto(movie);
+    @GetMapping("/movie/{id}")
+    public List<showtimegetdto> findByMovie(@PathVariable long  id){
+        return showtimeService.findByMovieAsDto(id);
     }
 
     @PostMapping("/hall")

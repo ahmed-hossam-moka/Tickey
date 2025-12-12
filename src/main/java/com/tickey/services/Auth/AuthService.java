@@ -55,13 +55,13 @@ public class AuthService {
     
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
-        
+        System.out.println(userOptional);
         if (userOptional.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid email or password");
         }
 
         User user = userOptional.get();
-
+        System.out.println(user);
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             return ResponseEntity.badRequest().body("Invalid email or password");
         }

@@ -92,8 +92,8 @@ public class ShowtimeService {
         return ShowtimeRepo.findByMovie(movie);
      }
      
-     public List<showtimegetdto> findByMovieAsDto(Movie movie) {
-         return ShowtimeRepo.findByMovie(movie).stream()
+     public List<showtimegetdto> findByMovieAsDto(long  id) {
+         return ShowtimeRepo.findById(id).stream()
                  .map(this::convertToDto)
                  .collect(Collectors.toList());
      }
