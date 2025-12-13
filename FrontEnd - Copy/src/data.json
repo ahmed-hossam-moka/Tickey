@@ -1,0 +1,74 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "cardName": "movie-card",
+      "badge": "New",
+      "image": "src/assets/El-Selem-W-El-Thoban-_1763011754.jpg",
+      "alt": "El-Selem-W-El-Thoban",
+      "title": "El-Selem-W-El-Thoban",
+      "description": "A thrilling story that keeps you on the edge of your seat from start to finish.",
+      "duration": "1h 58m",
+      "rating": "4.6/5"
+    },
+    {
+      "id": 2,
+      "cardName": "movie-card",
+      "badge": "New",
+      "image": "src/assets/Al-Sada-Al-Afadel_1761291496.jpg",
+      "alt": "Al-Sada-Al-Afadel",
+      "title": "Al-Sada-Al-Afadel",
+      "description": "An exciting adventure that takes you through unexpected twists and unforgettable moments.",
+      "duration": "2h 15m",
+      "rating": "4.6/5"
+    },
+    {
+      "id": 3,
+      "cardName": "movie-card",
+      "badge": "New",
+      "image": "src/assets/Wlana-fel5yal-7ob.jpg",
+      "alt": "Wlana-fel5yal-7ob",
+      "title": "Wlana-fel5yal-7ob",
+      "description": "A heartwarming tale of love, friendship, and the magic of cinema.",
+      "duration": "2h 5m",
+      "rating": "4.6/5"
+    },
+    {
+      "id": 4,
+      "cardName": "movie-card",
+      "badge": "New",
+      "image": "src/assets/Hunt Him Down.jpg",
+      "alt": "Hunt Him Down",
+      "title": "Hunt Him Down",
+      "description": "An action-packed thriller with stunning visuals and intense performances.",
+      "duration": "2h 30m",
+      "rating": "4.6/5"
+    }
+  ],
+  "halls":[
+    {
+      "id": 1,
+      "name": "Grand Hall 1",
+      "type": "IMAX",
+      "showtimes": ["10:00 AM", "01:30 PM", "04:45 PM", "08:00 PM", "10:30 PM"]
+    },
+    {
+      "id": 2,
+      "name": "Premium Hall 2",
+      "type": "4DX",
+      "showtimes": ["11:00 AM", "02:00 PM", "05:30 PM", "09:00 PM"]
+    },
+    {
+      "id": 3,
+      "name": "Standard Hall 3",
+      "type": "Standard",
+      "showtimes": ["09:30 AM", "12:00 PM", "03:00 PM", "06:30 PM", "09:45 PM"]
+    },
+    {
+      "id": 4,
+      "name": "VIP Hall 4",
+      "type": "VIP",
+      "showtimes": ["12:30 PM", "03:30 PM", "07:00 PM", "10:00 PM"]
+    }
+  ]
+}

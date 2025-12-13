@@ -1,18 +1,28 @@
 package com.tickey.services;
 
-import com.tickey.dtos.bookinggetdto;
-import com.tickey.entites.*;
-import com.tickey.entites.enums.BookingStatus;
-import com.tickey.repositorys.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tickey.dtos.bookinggetdto;
+import com.tickey.entites.Booking;
+import com.tickey.entites.BookingSeat;
+import com.tickey.entites.Hall;
+import com.tickey.entites.Seat;
+import com.tickey.entites.Showtime;
+import com.tickey.entites.User;
+import com.tickey.entites.enums.BookingStatus;
+import com.tickey.repositorys.BookingRepository;
+import com.tickey.repositorys.BookingSeatRepository;
+import com.tickey.repositorys.SeatRepository;
+import com.tickey.repositorys.ShowtimeRepository;
+import com.tickey.repositorys.UserRepository;
 
 @Service
 public class BookingService {
@@ -142,7 +152,10 @@ public class BookingService {
             bookingSeat.setShowtime(showtime);
             bookingSeats.add(bookingSeat);
         }
-        bookingSeatRepository.saveAll(bookingSeats);
+
+
+        // bookingSeatRepository.saveAll(bookingSeats);
+
 
         // 9. Update available seats count
         int newAvailableSeats = showtime.getAvailableSeats() - seats.size();
@@ -150,7 +163,10 @@ public class BookingService {
         showtimeRepository.save(showtime);
 
         savedBooking.setBookingSeats(bookingSeats);
-        return savedBooking;
+
+        return bookingRepository.save(savedBooking);
+
+        // return savedBooking;
     }
 
     // Get all bookings for a user

@@ -1,0 +1,135 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --dark-bg: #0f172a;
+  --card-bg: #1e293b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  min-height: 100vh;
+  color: #e2e8f0;
+}
+
+@media (max-width: 992px) {
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+
+  .trending-text {
+    font-size: 2.2rem;
+  }
+
+  .fire {
+    font-size: 2.2rem;
+  }
+
+  .carousel-item img {
+    height: 350px;
+  }
+
+  .movie-card-img {
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+
+  .trending-header {
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .trending-text {
+    font-size: 1.8rem;
+  }
+
+  .fire {
+    font-size: 1.8rem;
+  }
+
+  .carousel-item img {
+    height: 250px;
+  }
+
+  .movie-card-img {
+    height: 240px;
+  }
+
+  .movie-card-title {
+    font-size: 1.2rem;
+  }
+
+  .movie-card-text {
+    font-size: 0.9rem;
+  }
+
+  .btn-ticket {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .trending-text {
+    font-size: 1.5rem;
+  }
+
+  .fire {
+    font-size: 1.5rem;
+  }
+
+  .carousel-item img {
+    height: 200px;
+  }
+
+  .movie-card-img {
+    height: 200px;
+  }
+
+  .movie-card-body {
+    padding: 1rem;
+  }
+
+  .badge-new {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  footer h5 {
+    font-size: 1.2rem;
+  }
+
+  footer h6 {
+    font-size: 1rem;
+  }
+
+  footer .small {
+    font-size: 0.85rem;
+  }
+}

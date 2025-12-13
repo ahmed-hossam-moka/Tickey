@@ -1,0 +1,1313 @@
+================================================================================
+                    TICKEY MOVIE THEATER API DOCUMENTATION
+================================================================================
+
+Base URL: http://localhost:8080 (or your configured server URL)
+
+================================================================================
+                              TABLE OF CONTENTS
+================================================================================
+
+1. USER APIs
+2. MOVIE APIs
+3. HALL APIs
+4. SEAT APIs
+5. SHOWTIME APIs
+6. BOOKING APIs
+7. BOOKING SEAT APIs
+
+================================================================================
+                                1. USER APIs
+================================================================================
+
+Base Path: /users
+
+--------------------------------------------------------------------------------
+1.1 Create User
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /users
+Description: Creates a new user account
+
+Request Body (JSON):
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "role": "CUSTOMER"  // or "ADMIN"
+}
+
+Response: 200 OK
+Returns: User object
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "CUSTOMER",
+  ...
+}
+
+Example cURL:
+curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"john.doe@example.com","password":"password123","role":"CUSTOMER"}'
+
+--------------------------------------------------------------------------------
+1.2 Get All Users
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /users
+Description: Retrieves all users in the system
+
+Request Parameters: None
+
+Response: 200 OK
+Returns: Array of User objects
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "CUSTOMER",
+    ...
+  },
+  ...
+]
+
+Example cURL:
+curl -X GET http://localhost:8080/users
+
+--------------------------------------------------------------------------------
+1.3 Get User by ID
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /users/{id}
+Description: Retrieves a specific user by their ID
+
+Path Parameters:
+- id (Long): User ID
+
+Response: 200 OK
+Returns: User object or empty if not found
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "CUSTOMER",
+  ...
+}
+
+Example cURL:
+curl -X GET http://localhost:8080/users/1
+
+--------------------------------------------------------------------------------
+1.4 Get User by Email
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /users/email/{email}
+Description: Retrieves a user by their email address
+
+Path Parameters:
+- email (String): User email address
+
+Response: 200 OK
+Returns: User object or empty if not found
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "CUSTOMER",
+  ...
+}
+
+Example cURL:
+curl -X GET http://localhost:8080/users/email/john.doe@example.com
+
+--------------------------------------------------------------------------------
+1.5 Get Users by Role
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /users/role/{role}
+Description: Retrieves all users with a specific role
+
+Path Parameters:
+- role (String): User role (CUSTOMER or ADMIN)
+
+Response: 200 OK
+Returns: Array of User objects
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "CUSTOMER",
+    ...
+  },
+  ...
+]
+
+Example cURL:
+curl -X GET http://localhost:8080/users/role/CUSTOMER
+
+--------------------------------------------------------------------------------
+1.6 Check if User Exists by Email
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /users/exists/{email}
+Description: Checks if a user exists with the given email
+
+Path Parameters:
+- email (String): Email address to check
+
+Response: 200 OK
+Returns: Boolean (true or false)
+
+Example cURL:
+curl -X GET http://localhost:8080/users/exists/john.doe@example.com
+
+--------------------------------------------------------------------------------
+1.7 Update User
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /users
+Description: Updates an existing user
+
+Request Body (JSON):
+{
+  "id": 1,
+  "name": "John Updated",
+  "email": "john.doe@example.com",
+  "password": "newpassword123",
+  "role": "CUSTOMER"
+}
+
+Response: 200 OK
+Returns: Updated User object
+
+Example cURL:
+curl -X PUT http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"id":1,"name":"John Updated","email":"john.doe@example.com","password":"newpassword123","role":"CUSTOMER"}'
+
+--------------------------------------------------------------------------------
+1.8 Delete User
+--------------------------------------------------------------------------------
+HTTP Method: DELETE
+Endpoint: /users/{id}
+Description: Deletes a user by ID
+
+Path Parameters:
+- id (Long): User ID
+
+Response: 200 OK
+Returns: No content
+
+Example cURL:
+curl -X DELETE http://localhost:8080/users/1
+
+================================================================================
+                                2. MOVIE APIs
+================================================================================
+
+Base Path: /movies
+
+--------------------------------------------------------------------------------
+2.1 Create Movie
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /movies
+Description: Creates a new movie
+
+Request Body (JSON):
+{
+  "title": "The Matrix",
+  "description": "A computer hacker learns about the true nature of reality",
+  "duration": 136,  // in minutes
+  "genre": "Sci-Fi",
+  "rating": 4.7,
+  "posterUrl": "https://example.com/poster.jpg",
+  "releaseDate": "1999-03-31T00:00:00",
+  "status": "NOW_SHOWING"  // or "COMING_SOON", "ENDED"
+}
+
+Response: 200 OK
+Returns: Movie object
+
+Example cURL:
+curl -X POST http://localhost:8080/movies \
+  -H "Content-Type: application/json" \
+  -d '{"title":"The Matrix","description":"A computer hacker learns...","duration":136,"genre":"Sci-Fi","rating":4.7,"posterUrl":"https://example.com/poster.jpg","status":"NOW_SHOWING"}'
+
+--------------------------------------------------------------------------------
+2.2 Get All Movies
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /movies
+Description: Retrieves all movies as DTOs
+
+Request Parameters: None
+
+Response: 200 OK
+Returns: Array of moviegetdto objects
+[
+  {
+    "id": 1,
+    "cardName": "movie-card",
+    "badge": "New",
+    "image": "https://example.com/poster.jpg",
+    "alt": "The Matrix",
+    "title": "The Matrix",
+    "description": "A computer hacker learns about the true nature of reality",
+    "duration": "2h 16m",
+    "rating": "4.7/5",
+    "genre": "Sci-Fi",
+    "status": "NOW_SHOWING",
+    "releaseDate": "1999-03-31T00:00:00"
+  },
+  ...
+]
+
+Example cURL:
+curl -X GET http://localhost:8080/movies
+
+--------------------------------------------------------------------------------
+2.3 Get Movie by ID
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /movies/{id}
+Description: Retrieves a specific movie by ID as DTO
+
+Path Parameters:
+- id (Long): Movie ID
+
+Response: 200 OK
+Returns: moviegetdto object or empty if not found
+{
+  "id": 1,
+  "cardName": "movie-card",
+  "badge": "New",
+  "image": "https://example.com/poster.jpg",
+  "alt": "The Matrix",
+  "title": "The Matrix",
+  "description": "A computer hacker learns about the true nature of reality",
+  "duration": "2h 16m",
+  "rating": "4.7/5",
+  "genre": "Sci-Fi",
+  "status": "NOW_SHOWING",
+  "releaseDate": "1999-03-31T00:00:00"
+}
+
+Example cURL:
+curl -X GET http://localhost:8080/movies/1
+
+--------------------------------------------------------------------------------
+2.4 Get Movies by Status
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /movies/status/{status}
+Description: Retrieves movies filtered by status as DTOs
+
+Path Parameters:
+- status (String): Movie status (NOW_SHOWING, COMING_SOON, ENDED)
+
+Response: 200 OK
+Returns: Array of moviegetdto objects
+
+Example cURL:
+curl -X GET http://localhost:8080/movies/status/NOW_SHOWING
+
+--------------------------------------------------------------------------------
+2.5 Search Movies by Title
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /movies/search/title/{title}
+Description: Searches movies by title (case-insensitive partial match) as DTOs
+
+Path Parameters:
+- title (String): Search term
+
+Response: 200 OK
+Returns: Array of moviegetdto objects matching the title
+
+Example cURL:
+curl -X GET http://localhost:8080/movies/search/title/Matrix
+
+--------------------------------------------------------------------------------
+2.6 Get Movies by Genre
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /movies/genre/{genre}
+Description: Retrieves movies filtered by genre as DTOs
+
+Path Parameters:
+- genre (String): Movie genre
+
+Response: 200 OK
+Returns: Array of moviegetdto objects
+
+Example cURL:
+curl -X GET http://localhost:8080/movies/genre/Sci-Fi
+
+--------------------------------------------------------------------------------
+2.7 Update Movie
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /movies/{id}
+Description: Updates an existing movie
+
+Path Parameters:
+- id (Long): Movie ID
+
+Request Body (JSON):
+{
+  "title": "The Matrix Reloaded",
+  "description": "Updated description",
+  "duration": 138,
+  "genre": "Sci-Fi",
+  "rating": 4.8,
+  "posterUrl": "https://example.com/poster2.jpg",
+  "releaseDate": "2003-05-15T00:00:00",
+  "status": "NOW_SHOWING"
+}
+
+Response: 200 OK
+Returns: Updated Movie object
+
+Example cURL:
+curl -X PUT http://localhost:8080/movies/1 \
+  -H "Content-Type: application/json" \
+  -d '{"title":"The Matrix Reloaded","description":"Updated description","duration":138,"genre":"Sci-Fi","rating":4.8,"status":"NOW_SHOWING"}'
+
+--------------------------------------------------------------------------------
+2.8 Delete Movie
+--------------------------------------------------------------------------------
+HTTP Method: DELETE
+Endpoint: /movies/{id}
+Description: Deletes a movie by ID
+
+Path Parameters:
+- id (Long): Movie ID
+
+Response: 200 OK
+Returns: No content
+
+Example cURL:
+curl -X DELETE http://localhost:8080/movies/1
+
+================================================================================
+                                3. HALL APIs
+================================================================================
+
+Base Path: /halls
+
+--------------------------------------------------------------------------------
+3.1 Create Hall
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /halls
+Description: Creates a new hall (without seats)
+
+Request Body (JSON):
+{
+  "name": "Hall A",
+  "totalSeats": 100,
+  "rowCount": 10,
+  "seatsPerRow": 10
+}
+
+Response: 200 OK
+Returns: Hall object
+
+Example cURL:
+curl -X POST http://localhost:8080/halls \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Hall A","totalSeats":100,"rowCount":10,"seatsPerRow":10}'
+
+--------------------------------------------------------------------------------
+3.2 Create Hall with Seats
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /halls/with-seats
+Description: Creates a new hall and automatically generates all seats
+
+Request Body (JSON):
+{
+  "name": "Hall B",
+  "rows": 12,
+  "seatsPerRow": 15
+}
+
+Response: 201 Created
+Returns: Hall object with all seats created
+
+Note: Seats are automatically assigned types:
+- Last 2 rows: PREMIUM
+- First and last seats in each row: HANDICAP
+- All other seats: NORMAL
+
+Example cURL:
+curl -X POST http://localhost:8080/halls/with-seats \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Hall B","rows":12,"seatsPerRow":15}'
+
+--------------------------------------------------------------------------------
+3.3 Get All Halls
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /halls
+Description: Retrieves all halls as DTOs
+
+Request Parameters: None
+
+Response: 200 OK
+Returns: Array of hallgetdto objects
+[
+  {
+    "id": 1,
+    "name": "Hall A",
+    "totalSeats": 100,
+    "rowCount": 10,
+    "seatsPerRow": 10,
+    "createdAt": "2024-01-01T10:00:00"
+  },
+  ...
+]
+
+Example cURL:
+curl -X GET http://localhost:8080/halls
+
+--------------------------------------------------------------------------------
+3.4 Get Hall by ID
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /halls/id/{id}
+Description: Retrieves a specific hall by ID as DTO
+
+Path Parameters:
+- id (Long): Hall ID
+
+Response: 200 OK
+Returns: hallgetdto object
+{
+  "id": 1,
+  "name": "Hall A",
+  "totalSeats": 100,
+  "rowCount": 10,
+  "seatsPerRow": 10,
+  "createdAt": "2024-01-01T10:00:00"
+}
+Response: 404 NOT FOUND if hall doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/halls/id/1
+
+--------------------------------------------------------------------------------
+3.5 Get Hall by Name
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /halls/name/{name}
+Description: Retrieves a hall by name as DTO
+
+Path Parameters:
+- name (String): Hall name
+
+Response: 200 OK
+Returns: hallgetdto object
+{
+  "id": 1,
+  "name": "Hall A",
+  "totalSeats": 100,
+  "rowCount": 10,
+  "seatsPerRow": 10,
+  "createdAt": "2024-01-01T10:00:00"
+}
+Response: 404 NOT FOUND if hall doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/halls/name/Hall%20A
+
+--------------------------------------------------------------------------------
+3.6 Get Seats in Hall
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /halls/{id}/seats
+Description: Retrieves all seats in a specific hall
+
+Path Parameters:
+- id (Long): Hall ID
+
+Response: 200 OK
+Returns: Array of Seat objects
+Response: 404 NOT FOUND if hall doesn't exist or has no seats
+
+Example cURL:
+curl -X GET http://localhost:8080/halls/1/seats
+
+--------------------------------------------------------------------------------
+3.7 Get Hall Capacity
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /halls/{id}/capacity
+Description: Gets the total capacity (number of seats) of a hall
+
+Path Parameters:
+- id (Long): Hall ID
+
+Response: 200 OK
+Returns: JSON object with capacity
+{
+  "capacity": 100
+}
+Response: 404 NOT FOUND if hall doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/halls/1/capacity
+
+--------------------------------------------------------------------------------
+3.8 Update Hall
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /halls/{id}
+Description: Updates an existing hall
+
+Path Parameters:
+- id (Long): Hall ID
+
+Request Body (JSON):
+{
+  "name": "Hall A Updated",
+  "totalSeats": 120,
+  "rowCount": 12,
+  "seatsPerRow": 10
+}
+
+Response: 200 OK
+Returns: Updated Hall object
+Response: 404 NOT FOUND if hall doesn't exist
+
+Example cURL:
+curl -X PUT http://localhost:8080/halls/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Hall A Updated","totalSeats":120,"rowCount":12,"seatsPerRow":10}'
+
+--------------------------------------------------------------------------------
+3.9 Delete Hall
+--------------------------------------------------------------------------------
+HTTP Method: DELETE
+Endpoint: /halls/{id}
+Description: Deletes a hall by ID
+
+Path Parameters:
+- id (Long): Hall ID
+
+Response: 200 OK
+Returns: No content
+Response: 404 NOT FOUND if hall doesn't exist
+
+Example cURL:
+curl -X DELETE http://localhost:8080/halls/1
+
+================================================================================
+                                4. SEAT APIs
+================================================================================
+
+Base Path: /seats
+
+--------------------------------------------------------------------------------
+4.1 Get All Seats
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /seats
+Description: Retrieves all seats in the system as DTOs
+
+Request Parameters: None
+
+Response: 200 OK
+Returns: Array of seatgetdto objects
+[
+  {
+    "id": 1,
+    "hallId": 1,
+    "hallName": "Hall A",
+    "rowNo": 1,
+    "seatNumber": 1,
+    "type": "NORMAL"
+  },
+  ...
+]
+
+Example cURL:
+curl -X GET http://localhost:8080/seats
+
+--------------------------------------------------------------------------------
+4.2 Get Seat by ID
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /seats/{id}
+Description: Retrieves a specific seat by ID as DTO
+
+Path Parameters:
+- id (Long): Seat ID
+
+Response: 200 OK
+Returns: seatgetdto object
+{
+  "id": 1,
+  "hallId": 1,
+  "hallName": "Hall A",
+  "rowNo": 1,
+  "seatNumber": 1,
+  "type": "NORMAL"
+}
+Response: 404 NOT FOUND if seat doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/seats/1
+
+--------------------------------------------------------------------------------
+4.3 Get Seats by Hall
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /seats/hall/{hallId}
+Description: Retrieves all seats in a specific hall as DTOs
+
+Path Parameters:
+- hallId (Long): Hall ID
+
+Response: 200 OK
+Returns: Array of seatgetdto objects
+Response: 404 NOT FOUND if hall doesn't exist or has no seats
+
+Example cURL:
+curl -X GET http://localhost:8080/seats/hall/1
+
+--------------------------------------------------------------------------------
+4.4 Get Seats by Hall and Row
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /seats/hall/{hallId}/row/{rowNo}
+Description: Retrieves all seats in a specific row of a hall as DTOs
+
+Path Parameters:
+- hallId (Long): Hall ID
+- rowNo (Integer): Row number
+
+Response: 200 OK
+Returns: Array of seatgetdto objects
+Response: 404 NOT FOUND if no seats found
+
+Example cURL:
+curl -X GET http://localhost:8080/seats/hall/1/row/5
+
+--------------------------------------------------------------------------------
+4.5 Get Seats by Type
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /seats/type/{type}
+Description: Retrieves all seats of a specific type as DTOs
+
+Path Parameters:
+- type (String): Seat type (NORMAL, PREMIUM, or HANDICAP)
+
+Response: 200 OK
+Returns: Array of seatgetdto objects
+
+Example cURL:
+curl -X GET http://localhost:8080/seats/type/PREMIUM
+
+--------------------------------------------------------------------------------
+4.6 Get Seats by Hall and Type
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /seats/hall/{hallId}/type/{type}
+Description: Retrieves all seats of a specific type in a hall as DTOs
+
+Path Parameters:
+- hallId (Long): Hall ID
+- type (String): Seat type (NORMAL, PREMIUM, or HANDICAP)
+
+Response: 200 OK
+Returns: Array of seatgetdto objects
+Response: 404 NOT FOUND if no seats found
+
+Example cURL:
+curl -X GET http://localhost:8080/seats/hall/1/type/PREMIUM
+
+--------------------------------------------------------------------------------
+4.7 Create Seat
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /seats
+Description: Creates a new seat
+
+Request Body (JSON):
+{
+  "hallId": 1,
+  "rowNo": 5,
+  "seatNumber": 10,
+  "type": "NORMAL"  // or "PREMIUM" or "HANDICAP"
+}
+
+Response: 201 Created
+Returns: seatgetdto object
+{
+  "id": 1,
+  "hallId": 1,
+  "hallName": "Hall A",
+  "rowNo": 5,
+  "seatNumber": 10,
+  "type": "NORMAL"
+}
+Response: 400 BAD REQUEST if seat already exists at that position or invalid data
+
+Example cURL:
+curl -X POST http://localhost:8080/seats \
+  -H "Content-Type: application/json" \
+  -d '{"hallId":1,"rowNo":5,"seatNumber":10,"type":"NORMAL"}'
+
+--------------------------------------------------------------------------------
+4.8 Update Seat
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /seats/{id}
+Description: Updates an existing seat
+
+Path Parameters:
+- id (Long): Seat ID
+
+Request Body (JSON) - all fields optional:
+{
+  "hallId": 1,        // optional
+  "rowNo": 6,         // optional
+  "seatNumber": 11,   // optional
+  "type": "PREMIUM"   // optional
+}
+
+Response: 200 OK
+Returns: Updated seatgetdto object
+Response: 400 BAD REQUEST if invalid data
+Response: 404 NOT FOUND if seat doesn't exist
+
+Example cURL:
+curl -X PUT http://localhost:8080/seats/1 \
+  -H "Content-Type: application/json" \
+  -d '{"type":"PREMIUM"}'
+
+--------------------------------------------------------------------------------
+4.9 Delete Seat
+--------------------------------------------------------------------------------
+HTTP Method: DELETE
+Endpoint: /seats/{id}
+Description: Deletes a seat by ID
+
+Path Parameters:
+- id (Long): Seat ID
+
+Response: 204 NO CONTENT
+Response: 404 NOT FOUND if seat doesn't exist
+
+Example cURL:
+curl -X DELETE http://localhost:8080/seats/1
+
+================================================================================
+                              5. SHOWTIME APIs
+================================================================================
+
+Base Path: /showtimes
+
+--------------------------------------------------------------------------------
+5.1 Create Showtime
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /showtimes
+Description: Creates a new showtime
+
+Request Body (JSON):
+{
+  "movie": {
+    "id": 1
+  },
+  "hall": {
+    "id": 1
+  },
+  "showDate": "2024-12-25",
+  "showTime": "14:30:00",
+  "availableSeats": 100
+}
+
+Response: 200 OK
+Returns: Showtime object
+
+Example cURL:
+curl -X POST http://localhost:8080/showtimes \
+  -H "Content-Type: application/json" \
+  -d '{"movie":{"id":1},"hall":{"id":1},"showDate":"2024-12-25","showTime":"14:30:00","availableSeats":100}'
+
+--------------------------------------------------------------------------------
+5.2 Get Showtime by ID
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /showtimes/{id}
+Description: Retrieves a specific showtime by ID as DTO
+
+Path Parameters:
+- id (Long): Showtime ID
+
+Response: 200 OK
+Returns: showtimegetdto object or empty if not found
+{
+  "id": 1,
+  "movieId": 1,
+  "movieTitle": "The Matrix",
+  "moviePosterUrl": "https://example.com/poster.jpg",
+  "movieGenre": "Sci-Fi",
+  "movieDuration": 136,
+  "hallId": 1,
+  "hallName": "Hall A",
+  "showDate": "2024-12-25",
+  "showTime": "14:30:00",
+  "availableSeats": 100,
+  "createdAt": "2024-01-01T10:00:00"
+}
+
+Example cURL:
+curl -X GET http://localhost:8080/showtimes/1
+
+--------------------------------------------------------------------------------
+5.3 Find Showtimes by Movie
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /showtimes/movie
+Description: Retrieves all showtimes for a specific movie as DTOs
+
+Request Body (JSON):
+{
+  "id": 1
+}
+
+Response: 200 OK
+Returns: Array of showtimegetdto objects
+
+Example cURL:
+curl -X POST http://localhost:8080/showtimes/movie \
+  -H "Content-Type: application/json" \
+  -d '{"id":1}'
+
+--------------------------------------------------------------------------------
+5.4 Find Showtimes by Hall
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /showtimes/hall
+Description: Retrieves all showtimes in a specific hall as DTOs
+
+Request Body (JSON):
+{
+  "id": 1
+}
+
+Response: 200 OK
+Returns: Array of showtimegetdto objects
+
+Example cURL:
+curl -X POST http://localhost:8080/showtimes/hall \
+  -H "Content-Type: application/json" \
+  -d '{"id":1}'
+
+--------------------------------------------------------------------------------
+5.5 Find Showtimes by Date
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /showtimes/date/{date}
+Description: Retrieves all showtimes on a specific date as DTOs
+
+Path Parameters:
+- date (String): Date in format YYYY-MM-DD
+
+Response: 200 OK
+Returns: Array of showtimegetdto objects
+
+Example cURL:
+curl -X GET http://localhost:8080/showtimes/date/2024-12-25
+
+--------------------------------------------------------------------------------
+5.6 Find Showtimes by Movie and Date
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /showtimes/movie/date/{date}
+Description: Retrieves showtimes for a specific movie on a specific date as DTOs
+
+Path Parameters:
+- date (String): Date in format YYYY-MM-DD
+
+Request Body (JSON):
+{
+  "id": 1
+}
+
+Response: 200 OK
+Returns: Array of showtimegetdto objects
+
+Example cURL:
+curl -X POST http://localhost:8080/showtimes/movie/date/2024-12-25 \
+  -H "Content-Type: application/json" \
+  -d '{"id":1}'
+
+--------------------------------------------------------------------------------
+5.7 Find Showtimes by Hall and Date
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /showtimes/hall/date/{date}
+Description: Retrieves showtimes in a specific hall on a specific date as DTOs
+
+Path Parameters:
+- date (String): Date in format YYYY-MM-DD
+
+Request Body (JSON):
+{
+  "id": 1
+}
+
+Response: 200 OK
+Returns: Array of showtimegetdto objects
+
+Example cURL:
+curl -X POST http://localhost:8080/showtimes/hall/date/2024-12-25 \
+  -H "Content-Type: application/json" \
+  -d '{"id":1}'
+
+--------------------------------------------------------------------------------
+5.8 Update Showtime
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /showtimes/{id}
+Description: Updates an existing showtime
+
+Path Parameters:
+- id (Long): Showtime ID
+
+Request Body (JSON):
+{
+  "movie": {
+    "id": 1
+  },
+  "hall": {
+    "id": 1
+  },
+  "showDate": "2024-12-26",
+  "showTime": "16:00:00",
+  "availableSeats": 95
+}
+
+Response: 200 OK
+Returns: Updated Showtime object
+
+Example cURL:
+curl -X PUT http://localhost:8080/showtimes/1 \
+  -H "Content-Type: application/json" \
+  -d '{"movie":{"id":1},"hall":{"id":1},"showDate":"2024-12-26","showTime":"16:00:00","availableSeats":95}'
+
+--------------------------------------------------------------------------------
+5.9 Delete Showtime
+--------------------------------------------------------------------------------
+HTTP Method: DELETE
+Endpoint: /showtimes/{id}
+Description: Deletes a showtime by ID
+
+Path Parameters:
+- id (Long): Showtime ID
+
+Response: 200 OK
+Returns: No content
+
+Example cURL:
+curl -X DELETE http://localhost:8080/showtimes/1
+
+================================================================================
+                              6. BOOKING APIs
+================================================================================
+
+Base Path: /bookings
+
+--------------------------------------------------------------------------------
+6.1 Create Booking
+--------------------------------------------------------------------------------
+HTTP Method: POST
+Endpoint: /bookings
+Description: Creates a new booking for a showtime with selected seats
+
+Request Body (JSON):
+{
+  "userId": 1,
+  "showtimeId": 1,
+  "seatIds": [1, 2, 3]
+}
+
+Response: 201 Created
+Returns: Booking object
+{
+  "id": 1,
+  "user": {...},
+  "showtime": {...},
+  "totalPrice": 30.0,
+  "status": "PENDING",
+  "bookingSeats": [...],
+  ...
+}
+Response: 400 BAD REQUEST if seats are already booked or invalid data
+
+Example cURL:
+curl -X POST http://localhost:8080/bookings \
+  -H "Content-Type: application/json" \
+  -d '{"userId":1,"showtimeId":1,"seatIds":[1,2,3]}'
+
+--------------------------------------------------------------------------------
+6.2 Get All Bookings
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /bookings
+Description: Retrieves all bookings (admin function) as DTOs
+
+Request Parameters: None
+
+Response: 200 OK
+Returns: Array of bookinggetdto objects
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "userName": "John Doe",
+    "userEmail": "john.doe@example.com",
+    "showtimeId": 1,
+    "movieTitle": "The Matrix",
+    "hallName": "Hall A",
+    "showDate": "2024-12-25",
+    "showTime": "14:30:00",
+    "totalPrice": 30.0,
+    "status": "PENDING",
+    "bookingDate": "2024-12-20T10:00:00",
+    "cancelledAt": null,
+    "bookedSeats": [
+      {
+        "seatId": 1,
+        "rowNo": 5,
+        "seatNumber": 10,
+        "seatType": "NORMAL"
+      },
+      ...
+    ]
+  },
+  ...
+]
+
+Example cURL:
+curl -X GET http://localhost:8080/bookings
+
+--------------------------------------------------------------------------------
+6.3 Get Booking by ID
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /bookings/{id}
+Description: Retrieves a specific booking by ID as DTO
+
+Path Parameters:
+- id (Long): Booking ID
+
+Response: 200 OK
+Returns: bookinggetdto object
+{
+  "id": 1,
+  "userId": 1,
+  "userName": "John Doe",
+  "userEmail": "john.doe@example.com",
+  "showtimeId": 1,
+  "movieTitle": "The Matrix",
+  "hallName": "Hall A",
+  "showDate": "2024-12-25",
+  "showTime": "14:30:00",
+  "totalPrice": 30.0,
+  "status": "PENDING",
+  "bookingDate": "2024-12-20T10:00:00",
+  "cancelledAt": null,
+  "bookedSeats": [
+    {
+      "seatId": 1,
+      "rowNo": 5,
+      "seatNumber": 10,
+      "seatType": "NORMAL"
+    }
+  ]
+}
+Response: 404 NOT FOUND if booking doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/bookings/1
+
+--------------------------------------------------------------------------------
+6.4 Get User Bookings
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /bookings/user/{userId}
+Description: Retrieves all bookings for a specific user as DTOs
+
+Path Parameters:
+- userId (Long): User ID
+
+Response: 200 OK
+Returns: Array of bookinggetdto objects
+
+Example cURL:
+curl -X GET http://localhost:8080/bookings/user/1
+
+--------------------------------------------------------------------------------
+6.5 Get Available Seats for Showtime
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /bookings/showtime/{showtimeId}/available-seats
+Description: Retrieves all available (unbooked) seats for a showtime
+
+Path Parameters:
+- showtimeId (Long): Showtime ID
+
+Response: 200 OK
+Returns: Array of Seat objects
+Response: 404 NOT FOUND if showtime doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/bookings/showtime/1/available-seats
+
+--------------------------------------------------------------------------------
+6.6 Get Booked Seats for Showtime
+--------------------------------------------------------------------------------
+HTTP Method: GET
+Endpoint: /bookings/showtime/{showtimeId}/booked-seats
+Description: Retrieves all booked seats for a showtime
+
+Path Parameters:
+- showtimeId (Long): Showtime ID
+
+Response: 200 OK
+Returns: Array of Seat objects
+Response: 404 NOT FOUND if showtime doesn't exist
+
+Example cURL:
+curl -X GET http://localhost:8080/bookings/showtime/1/booked-seats
+
+--------------------------------------------------------------------------------
+6.7 Cancel Booking
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /bookings/{id}/cancel
+Description: Cancels a booking and returns seats to available pool
+
+Path Parameters:
+- id (Long): Booking ID
+
+Response: 200 OK
+Returns: Updated Booking object with status CANCELLED
+Response: 400 BAD REQUEST if booking is already cancelled
+
+Example cURL:
+curl -X PUT http://localhost:8080/bookings/1/cancel
+
+--------------------------------------------------------------------------------
+6.8 Confirm Booking
+--------------------------------------------------------------------------------
+HTTP Method: PUT
+Endpoint: /bookings/{id}/confirm
+Description: Confirms a booking (after payment)
+
+Path Parameters:
+- id (Long): Booking ID
+
+Response: 200 OK
+Returns: Updated Booking object with status CONFIRMED
+Response: 400 BAD REQUEST if booking is cancelled
+
+Example cURL:
+curl -X PUT http://localhost:8080/bookings/1/confirm
+
+================================================================================
+                           7. BOOKING SEAT APIs
+================================================================================
+
+Base Path: /booking-seats
+
+Note: BookingSeat is a junction entity that links bookings, seats, and showtimes.
+Most operations are handled through the Booking APIs, but specific endpoints
+may exist for direct BookingSeat operations.
+
+================================================================================
+                              ERROR RESPONSES
+================================================================================
+
+All APIs may return the following error responses:
+
+400 BAD REQUEST
+- Invalid request data
+- Missing required fields
+- Business logic violations (e.g., seat already booked)
+
+404 NOT FOUND
+- Resource doesn't exist
+- Invalid ID provided
+
+500 INTERNAL SERVER ERROR
+- Server-side errors
+- Database errors
+
+Error Response Format:
+{
+  "timestamp": "2024-12-25T10:30:00",
+  "status": 404,
+  "error": "Not Found",
+  "message": "Resource not found",
+  "path": "/api/resource/1"
+}
+
+================================================================================
+                              DATA TYPES
+================================================================================
+
+SeatType Enum:
+- NORMAL: Standard seat
+- PREMIUM: Premium seat (usually last rows)
+- HANDICAP: Handicap accessible seat
+
+MovieStatus Enum:
+- NOW_SHOWING: Currently showing
+- COMING_SOON: Upcoming release
+- ENDED: No longer showing
+
+BookingStatus Enum:
+- PENDING: Booking created but not confirmed
+- CONFIRMED: Booking confirmed (payment received)
+- CANCELLED: Booking cancelled
+
+UserRole Enum:
+- CUSTOMER: Regular customer
+- ADMIN: Administrator
+
+================================================================================
+                              NOTES
+================================================================================
+
+1. All dates should be in ISO 8601 format (YYYY-MM-DD)
+2. All times should be in HH:mm:ss format
+3. All IDs are Long integers
+4. ALL GET METHODS return DTOs (Data Transfer Objects) instead of entity objects:
+   - Movie GET methods return moviegetdto
+   - Hall GET methods return hallgetdto
+   - Showtime GET methods return showtimegetdto
+   - Booking GET methods return bookinggetdto
+   - Seat GET methods return seatgetdto
+   This avoids circular references and provides cleaner API responses
+5. POST, PUT, and DELETE methods still return entity objects
+6. When creating a hall with seats, seats are automatically assigned types
+7. Seat positions must be unique within a hall (hall_id, rowNo, seatNumber)
+8. Bookings automatically update available seats count in showtimes
+9. Cancelling a booking returns seats to the available pool
+
+================================================================================
+                              END OF DOCUMENTATION
+================================================================================
+
