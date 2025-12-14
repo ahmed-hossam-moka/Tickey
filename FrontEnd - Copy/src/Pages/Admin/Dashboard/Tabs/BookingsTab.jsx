@@ -118,7 +118,7 @@ const BookingsTab = () => {
         return formatDate(date, time);
     };
 
-    // Filter bookings
+    // Filter bookings and sort new to old
     const filteredBookings = bookings.filter(booking => {
         const searchLower = searchTerm.toLowerCase();
         const userName = getUserName(booking).toLowerCase();
@@ -130,6 +130,8 @@ const BookingsTab = () => {
             userEmail.includes(searchLower) ||
             movieTitle.includes(searchLower) ||
             idMatch;
+    }).sort((a, b) => {
+        return b.id - a.id;
     });
 
     return (
