@@ -12,12 +12,15 @@ import com.tickey.dtos.showtimegetdto;
 import com.tickey.entites.Hall;
 import com.tickey.entites.Movie;
 import com.tickey.entites.Showtime;
+import com.tickey.repositorys.MovieRepository;
 import com.tickey.repositorys.ShowtimeRepository;
 
 @Service
 public class ShowtimeService {
     @Autowired
     private ShowtimeRepository ShowtimeRepo;
+    @Autowired
+    private MovieRepository mrepo;
     
     // Convert Showtime entity to showtimegetdto
     private showtimegetdto convertToDto(Showtime showtime) {
@@ -92,8 +95,9 @@ public class ShowtimeService {
         return ShowtimeRepo.findByMovie(movie);
      }
      
-     public List<showtimegetdto> findByMovieAsDto(long  id) {
-         return ShowtimeRepo.findById(id).stream()
+     public List<showtimegetdto> findByMovieAsDto(long id) {
+        Movie movie = mrepo.findById(id).orElseThrow(() -> new RuntimeException("Movie not found"));
+         return ShowtimeRepo.findByMovie(movie).stream()
                  .map(this::convertToDto)
                  .collect(Collectors.toList());
      }

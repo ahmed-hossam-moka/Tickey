@@ -3,6 +3,10 @@ package com.tickey.dtos;
 import com.tickey.entites.enums.MovieStatus;
 import java.time.LocalDateTime;
 
+
+import com.tickey.entites.Showtime;
+import java.util.List;
+
 public class moviegetdto {
     private Long id;
     private String cardName; // "movie-card"
@@ -16,6 +20,7 @@ public class moviegetdto {
     private String genre;
     private MovieStatus status;
     private LocalDateTime releaseDate;
+    private List<Showtime> showtimes;
     
     // Constructors, Getters and Setters
     public moviegetdto() {
@@ -134,4 +139,13 @@ public class moviegetdto {
     public void setReleaseDate(LocalDateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
+    
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    public void setShowtimes(List<Showtime> showtimes) {
+        this.showtimes = showtimes;
+    }
+
 }

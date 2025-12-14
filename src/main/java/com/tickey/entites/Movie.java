@@ -142,5 +142,5 @@ public class Movie {
     public void setShowtimes(List<Showtime> showtimes) {
         this.showtimes = showtimes;
     }
-
+    
 }

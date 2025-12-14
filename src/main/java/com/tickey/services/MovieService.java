@@ -32,6 +32,7 @@ public class MovieService {
         dto.setGenre(movie.getGenre());
         dto.setStatus(movie.getStatus());
         dto.setReleaseDate(movie.getReleaseDate());
+        dto.setShowtimes(movie.getShowtimes());
         return dto;
     }
     
@@ -52,7 +53,7 @@ public class MovieService {
             existing.setGenre(movie.getGenre());
             existing.setReleaseDate(movie.getReleaseDate());
             existing.setRating(movie.getRating());
-        
+            existing.setShowtimes(movie.getShowtimes());
             return MovieRepo.save(existing);
         }
     
