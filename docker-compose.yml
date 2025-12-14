@@ -1,0 +1,33 @@
+services:
+  tickey-app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tickey-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://tickey-db:3306/tickeydb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - tickey-network
+
+  tickey-db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306" # Mapped to 3307 on host to avoid conflict with local MySQL
+    environment:
+      - MYSQL_DATABASE=tickeydb
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - tickey-network
+
+volumes:
+  mysql_data:
+
+
+networks:
+  tickey-network:
