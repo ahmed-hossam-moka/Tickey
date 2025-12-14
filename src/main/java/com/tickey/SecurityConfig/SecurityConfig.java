@@ -85,7 +85,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
 
-                .requestMatchers("/bookings/**").hasRole("CUSTOMER")
+                .requestMatchers("/bookings/**").hasAnyRole("CUSTOMER", "ADMIN")
 
                 .requestMatchers(HttpMethod.POST, "/movies/**", "/halls/**", "/showtimes/**", "/seats/**", "/users/**")
                 .hasRole("ADMIN")

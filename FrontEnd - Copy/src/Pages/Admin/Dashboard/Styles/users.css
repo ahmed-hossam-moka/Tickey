@@ -1,0 +1,122 @@
+/* src/Pages/Admin/Dashboard/Tabs/users.css */
+
+.users-search-container {
+    max-width: 400px;
+    position: relative;
+}
+
+.users-search-input {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+    padding-left: 2.5rem;
+    border-radius: 12px;
+    height: 48px;
+    transition: all 0.3s ease;
+}
+
+.users-search-input:focus {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: rgba(102, 126, 234, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+}
+
+.users-table-container {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.users-table thead {
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.users-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1.25rem 1.5rem;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.users-table td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+}
+
+.users-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #3b82f6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-avatar.admin {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.role-badge {
+    padding: 0.35em 0.8em;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.role-badge.admin {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.role-badge.user {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.action-buttons .btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.action-buttons .btn:hover {
+    transform: translateY(-2px);
+}

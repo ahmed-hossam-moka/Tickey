@@ -157,7 +157,7 @@ const useUserStore = create(
             // Store password in sessionStorage for Basic Auth
             // Note: This is stored in sessionStorage (cleared on tab close) for security
             sessionStorage.setItem('user_password', loginRequest.password);
-            
+
             set({
               currentUser: user,
               isAuthenticated: true,
@@ -182,7 +182,30 @@ const useUserStore = create(
             throw new Error("User already exists");
           }
           const data = await usersApi.createUser(userData);
-          set({ loading: false });
+          set((state) => ({
+            loading: false,
+            users: [...state.users, data]
+          }));
+          return data;
+        } catch (error) {
+          set({ error: error.message, loading: false });
+          throw error;
+        }
+      },
+
+      // Register admin
+      registerAdmin: async (userData) => {
+        set({ loading: true, error: null });
+        try {
+          const exists = await usersApi.checkUserExists(userData.email);
+          if (exists) {
+            throw new Error("User already exists");
+          }
+          const data = await usersApi.registerAdmin(userData);
+          set((state) => ({
+            loading: false,
+            users: [...state.users, data]
+          }));
           return data;
         } catch (error) {
           set({ error: error.message, loading: false });
@@ -194,7 +217,7 @@ const useUserStore = create(
       logout: () => {
         // Clear password from sessionStorage
         sessionStorage.removeItem('user_password');
-        
+
         set({
           currentUser: null,
           isAuthenticated: false,
@@ -232,10 +255,17 @@ const useUserStore = create(
         set({ loading: true, error: null });
         try {
           const data = await usersApi.updateUser(userData);
-          if (get().currentUser?.id === userData.id) {
-            set({ currentUser: data });
-          }
-          set({ loading: false });
+
+          set((state) => {
+            const updatedUsers = state.users.map(u => u.id === data.id ? data : u);
+            const currentUser = state.currentUser?.id === data.id ? data : state.currentUser;
+            return {
+              loading: false,
+              users: updatedUsers,
+              currentUser: currentUser
+            };
+          });
+
           return data;
         } catch (error) {
           set({ error: error.message, loading: false });
@@ -248,7 +278,10 @@ const useUserStore = create(
         set({ loading: true, error: null });
         try {
           await usersApi.deleteUser(id);
-          set({ loading: false });
+          set((state) => ({
+            loading: false,
+            users: state.users.filter(u => u.id !== id)
+          }));
         } catch (error) {
           set({ error: error.message, loading: false });
           throw error;

@@ -1,0 +1,24 @@
+/* src/Pages/Admin/Dashboard/Tabs/Components/seatlayout.css */
+.seat-box {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px 8px 4px 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+    cursor: default;
+    transition: all 0.2s;
+}
+
+.seat-normal {
+    background-color: #475569;
+    color: #e2e8f0;
+    box-shadow: 0 4px 0 #1e293b;
+}
+
+.seat-premium {
+    background-color: #f59e0b;
+    color: #fff;
+    box-shadow: 0 4px 0 #b45309;
+}

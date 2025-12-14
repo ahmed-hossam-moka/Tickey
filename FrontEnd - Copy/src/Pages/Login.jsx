@@ -23,12 +23,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const loginRequest={
-        email:formData.email,
-        password:formData.password
+      const loginRequest = {
+        email: formData.email,
+        password: formData.password
       };
       await login(loginRequest);
-      navigate("/");
+      const user = useUserStore.getState().currentUser;
+      if (user?.role === "ADMIN") {
+        navigate("/admin/movies");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       console.error("Login failed:", err);
     }
@@ -111,18 +116,6 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="auth-divider">
-            <span>OR</span>
-          </div>
-
-          <div className="social-login">
-            <button className="btn-social google" disabled={loading}>
-              <i className="bi bi-google"></i> Continue with Google
-            </button>
-            <button className="btn-social facebook" disabled={loading}>
-              <i className="bi bi-facebook"></i> Continue with Facebook
-            </button>
-          </div>
 
           <div className="auth-footer">
             <p>

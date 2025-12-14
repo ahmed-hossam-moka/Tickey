@@ -1,0 +1,109 @@
+/* src/Pages/Admin/Dashboard/Tabs/bookings.css */
+
+/* Reusing and adapting premium styles */
+
+.bookings-search-container {
+    max-width: 400px;
+    position: relative;
+}
+
+.bookings-search-input {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+    padding-left: 2.5rem;
+    border-radius: 12px;
+    height: 48px;
+    transition: all 0.3s ease;
+}
+
+.bookings-search-input:focus {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: rgba(139, 92, 246, 0.5) !important;
+    /* Purple tint for bookings */
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+.bookings-table-container {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.bookings-table thead {
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.bookings-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1.25rem 1.5rem;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bookings-table td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+}
+
+.bookings-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.bookings-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.35em 0.8em;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.status-badge.confirmed {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.cancelled {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-badge.pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Seat Tags in Modal */
+.seat-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 2px;
+    font-size: 0.85rem;
+    color: #e2e8f0;
+}
+
+.movie-mini-poster {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}

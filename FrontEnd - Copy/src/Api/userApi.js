@@ -13,6 +13,16 @@ const usersApi = {
     }
   },
 
+  // Create admin
+  registerAdmin: async (userData) => {
+    try {
+      const response = await axiosInstance.post('/auth/register-admin', userData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // Get all users
   getAllUsers: async () => {
     try {
@@ -36,7 +46,7 @@ const usersApi = {
   // Get user by email
   getUserByEmail: async (loginRequest) => {
     try {
-      const response = await axiosInstance.post(`/auth/login`,loginRequest);
+      const response = await axiosInstance.post(`/auth/login`, loginRequest);
       return response.data;
     } catch (error) {
       throw error;

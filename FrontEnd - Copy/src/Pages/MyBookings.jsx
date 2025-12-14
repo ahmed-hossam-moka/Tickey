@@ -8,16 +8,16 @@ import '../styles/myBookings.css';
 const MyBookings = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState('all'); // all, confirmed, pending, cancelled
-  
-  const { 
-    bookings, 
-    loading, 
+
+  const {
+    bookings,
+    loading,
     error,
     fetchUserBookings,
     cancelBooking,
     clearError
   } = useBookingStore();
-  
+
   const { currentUser, isAuthenticated } = useUserStore();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const MyBookings = () => {
       try {
         await cancelBooking(bookingId);
         alert('Booking cancelled successfully!');
-        
+
         // Refresh bookings
         const userId = currentUser.userId || currentUser.id;
         fetchUserBookings(userId);
@@ -59,13 +59,13 @@ const MyBookings = () => {
 
   const getFilteredBookings = () => {
     if (filter === 'all') return bookings;
-    return bookings.filter(booking => 
+    return bookings.filter(booking =>
       booking.status.toLowerCase() === filter.toLowerCase()
     );
   };
 
   const getStatusClass = (status) => {
-    switch(status.toLowerCase()) {
+    switch (status.toLowerCase()) {
       case 'confirmed':
         return 'status-confirmed';
       case 'pending':
@@ -80,10 +80,10 @@ const MyBookings = () => {
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     });
   };
 
@@ -107,9 +107,9 @@ const MyBookings = () => {
         {error && (
           <div className="alert alert-danger alert-dismissible fade show" role="alert">
             <i className="bi bi-exclamation-triangle-fill"></i> {error}
-            <button 
-              type="button" 
-              className="btn-close" 
+            <button
+              type="button"
+              className="btn-close"
               onClick={clearError}
               aria-label="Close"
             ></button>
@@ -118,25 +118,25 @@ const MyBookings = () => {
 
         <div className="filter-section">
           <div className="filter-buttons">
-            <button 
+            <button
               className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
               onClick={() => setFilter('all')}
             >
               All
             </button>
-            <button 
+            <button
               className={`filter-btn ${filter === 'confirmed' ? 'active' : ''}`}
               onClick={() => setFilter('confirmed')}
             >
               Confirmed
             </button>
-            <button 
+            <button
               className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
               onClick={() => setFilter('pending')}
             >
               Pending
             </button>
-            <button 
+            <button
               className={`filter-btn ${filter === 'cancelled' ? 'active' : ''}`}
               onClick={() => setFilter('cancelled')}
             >
@@ -156,11 +156,11 @@ const MyBookings = () => {
             <i className="bi bi-ticket-perforated empty-icon"></i>
             <h3>No bookings found</h3>
             <p>
-              {filter === 'all' 
-                ? "You haven't made any bookings yet." 
+              {filter === 'all'
+                ? "You haven't made any bookings yet."
                 : `No ${filter} bookings found.`}
             </p>
-            <button 
+            <button
               className="btn-browse"
               onClick={() => navigate('/')}
             >
@@ -214,10 +214,10 @@ const MyBookings = () => {
                       <div>
                         <small>Booked Seats</small>
                         <p className="seats-list">
-                          {booking.bookedSeats && booking.bookedSeats.length > 0 
-                            ? booking.bookedSeats.map(seat => 
-                                `Row ${seat.rowNo}, Seat ${seat.seatNumber}`
-                              ).join(' • ')
+                          {booking.bookedSeats && booking.bookedSeats.length > 0
+                            ? booking.bookedSeats.map(seat =>
+                              `Row ${seat.rowNo}, Seat ${seat.seatNumber}`
+                            ).join(' • ')
                             : 'No seat information'
                           }
                         </p>
@@ -230,9 +230,9 @@ const MyBookings = () => {
                       <small>Total Amount</small>
                       <h4>EGP {booking.totalPrice || 0}</h4>
                     </div>
-                    
-                    {booking.status.toLowerCase() !== 'cancelled' && (
-                      <button 
+
+                    {booking.status.toLowerCase() !== 'cancelled' && booking.status.toLowerCase() !== 'confirmed' && (
+                      <button
                         className="btn-cancel"
                         onClick={() => handleCancelBooking(booking.id)}
                         disabled={loading}

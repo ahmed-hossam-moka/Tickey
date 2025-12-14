@@ -70,17 +70,17 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Get user credentials from localStorage
     const userStorage = localStorage.getItem('user-storage');
-    
+
     if (userStorage) {
       try {
         const parsed = JSON.parse(userStorage);
         const user = parsed.state?.currentUser;
-        
+
         // If user is authenticated and we have email, add Basic Auth
         if (user && user.email) {
           // Get password from sessionStorage (stored temporarily during login)
           const password = sessionStorage.getItem('user_password');
-          
+
           if (password) {
             // Create Basic Auth header
             const credentials = btoa(`${user.email}:${password}`);
@@ -91,7 +91,7 @@ axiosInstance.interceptors.request.use(
         console.error('Error parsing user storage:', error);
       }
     }
-    
+
     return config;
   },
   (error) => {

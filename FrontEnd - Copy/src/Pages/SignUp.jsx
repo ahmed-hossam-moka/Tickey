@@ -26,7 +26,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       setValidationError("Passwords don't match!");
       return;
@@ -39,7 +39,7 @@ const SignUp = () => {
         password: formData.password,
         role: "CUSTOMER"
       };
-      
+
       await register(userData);
       navigate("/login");
     } catch (err) {
@@ -156,19 +156,6 @@ const SignUp = () => {
               )}
             </button>
           </form>
-
-          <div className="auth-divider">
-            <span>OR</span>
-          </div>
-
-          <div className="social-login">
-            <button className="btn-social google" disabled={loading}>
-              <i className="bi bi-google"></i> Sign up with Google
-            </button>
-            <button className="btn-social facebook" disabled={loading}>
-              <i className="bi bi-facebook"></i> Sign up with Facebook
-            </button>
-          </div>
 
           <div className="auth-footer">
             <p>
