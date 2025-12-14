@@ -4,6 +4,7 @@ target
 .vscode
 FrontEnd
 FrontEnd - Copy
+Gateway
 frontend
 **/*.class
 *.log
